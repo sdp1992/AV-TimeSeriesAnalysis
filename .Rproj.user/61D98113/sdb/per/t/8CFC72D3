@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n\n#install libraries\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(ggplot2)\nlibrary(xts)\n\n#importing data\ntrain<-read.csv(\"F:\\\\AnalyticsVidya\\\\FA_TimeSeriesAnalysis\\\\data\\\\train.csv\",header = TRUE)\ntest<-read.csv(\"F:\\\\AnalyticsVidya\\\\FA_TimeSeriesAnalysis\\\\data\\\\test.csv\",header = TRUE)\n\n#EDA\nsummary(train)#Some missing value in Category_2\nsummary(test)#Some missing value in Category_2\ndim(train)#881876 observations\ndim(test)#266248 values has to be predicted\n\ntrain<-train[,-1]\ntest<-test[,-6]\n\ntrain$Category_1<-as.factor(train$Category_1)\ntrain$Category_2<-as.factor(train$Category_2)\ntrain$Category_3<-as.factor(train$Category_3)\ntrain$Datetime<-as.Date(train$Datetime)\n\ntest$Category_1<-as.factor(test$Category_1)\ntest$Category_2<-as.factor(test$Category_2)\ntest$Category_3<-as.factor(test$Category_3)\ntest$Datetime<-as.Date(test$Datetime)\n\nmissing_cat_index<-which(is.na(train$Category_2))\nitem_id_missing_cat_index<-unique(train$Item_ID[missing_cat_index])\nlevels(train$Category_2)<-c(levels(train$Category_2),6)\ntrain$Category_2[missing_cat_index]<- 6\n\ntemp1<-which(train$Item_ID==29655)\ntemp_data<-train[temp1,\"Price\"]\n\ntimeseries<-ts(temp_data,start = c(2014,11,12),frequency = 365,)\nplot(timeseries)\n",
+    "created" : 1498845499906.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "422762690",
+    "id" : "8CFC72D3",
+    "lastKnownWriteTime" : 1499021164,
+    "last_content_update" : -2147483648,
+    "path" : "F:/AnalyticsVidya/FA_TimeSeriesAnalysis/main.R",
+    "project_path" : "main.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
